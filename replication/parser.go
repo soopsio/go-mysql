@@ -200,6 +200,11 @@ func (p *BinlogParser) SetVerifyChecksum(verify bool) {
 	p.verifyChecksum = verify
 }
 
+// added by danny
+func (p *BinlogParser) ParseHeader(data []byte) (*EventHeader, error) {
+	return p.parseHeader(data)
+}
+
 func (p *BinlogParser) parseHeader(data []byte) (*EventHeader, error) {
 	h := new(EventHeader)
 	err := h.Decode(data)
@@ -208,6 +213,11 @@ func (p *BinlogParser) parseHeader(data []byte) (*EventHeader, error) {
 	}
 
 	return h, nil
+}
+
+// added by danny
+func (p *BinlogParser) ParseEvent(h *EventHeader, data []byte, rawData []byte) (Event, error) {
+	return p.parseEvent(h, data, rawData)
 }
 
 func (p *BinlogParser) parseEvent(h *EventHeader, data []byte, rawData []byte) (Event, error) {
